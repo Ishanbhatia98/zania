@@ -1,19 +1,29 @@
-
-
-from .main import BaseSQL, GetOr404Mixin, UniqueSlugMixin
-
-from sqlalchemy import Column, Enum, LargeBinary, String, Text, Integer, DateTime, Boolean, Float, JSON, Enum
 from datetime import datetime, timedelta
+
 from fastapi import HTTPException, status
 from fastapi.responses import RedirectResponse
+from sqlalchemy import (
+    JSON,
+    Boolean,
+    Column,
+    DateTime,
+    Enum,
+    Float,
+    Integer,
+    LargeBinary,
+    String,
+    Text,
+)
 
-from .product import Product
 from app.type.order_status import OrderStatus
+
+from .main import BaseSQL, GetOr404Mixin, UniqueSlugMixin
+from .product import Product
 
 
 class Order(BaseSQL, GetOr404Mixin, UniqueSlugMixin):
     __tablename__ = "order"
-    
+
     id = Column(Integer, primary_key=True, index=True)
     products = Column(JSON, nullable=False)
     total_price = Column(Float, default=datetime.utcnow)
@@ -25,6 +35,6 @@ class Order(BaseSQL, GetOr404Mixin, UniqueSlugMixin):
         new_order = super().create(
             products=payload.products,
             total_price=total_price,
-            status=OrderStatus.PENDING
+            status=OrderStatus.PENDING,
         )
         return new_order

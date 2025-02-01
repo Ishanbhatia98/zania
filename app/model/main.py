@@ -1,4 +1,3 @@
-"""Models for the database"""
 from contextlib import contextmanager
 from functools import wraps
 from io import BytesIO
@@ -12,8 +11,7 @@ from sqlalchemy import text as sqlalchemy_text
 from sqlalchemy.dialects.postgresql import ARRAY, UUID
 from sqlalchemy.ext.declarative import declared_attr
 from typeguard import typechecked
-from fastapi import HTTPException, status
-from typeguard import typechecked
+
 from app.database import db_instance, get_db_session
 
 Base = db_instance.base
@@ -88,6 +86,7 @@ class BaseSQL(Base):
             session.rollback()
             raise e
 
+
 @typechecked
 class GetOr404Mixin:
     @classmethod
@@ -117,4 +116,3 @@ class UniqueSlugMixin:
 
 if __name__ == "__main__":
     from app.database import db_instance
-    

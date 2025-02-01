@@ -1,7 +1,8 @@
+from datetime import datetime
+from typing import List, Optional
 
 from pydantic import BaseModel, HttpUrl
-from typing import Optional, List
-from datetime import datetime
+
 
 class CreateProduct(BaseModel):
     name: str
@@ -9,7 +10,8 @@ class CreateProduct(BaseModel):
     price: float
     stock: Optional[int] = 0
 
-class ProductResponse(BaseModel):   
+
+class ProductResponse(BaseModel):
     id: int
     name: str
     description: Optional[str]
@@ -17,4 +19,4 @@ class ProductResponse(BaseModel):
     stock: Optional[int] = 0
 
     class Config:
-        orm_mode = True
+        from_attributes = True

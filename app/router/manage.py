@@ -1,24 +1,20 @@
-
-from typing import Callable, List
-from fastapi import APIRouter, Depends, HTTPException, status, Request
-from fastapi.responses import RedirectResponse
-from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
-from app.schema.product import CreateProduct, ProductResponse
-from app.schema.order import CreateOrder, OrderResponse
+from typing import Callable, List
 
-from app.model.product import Product
+from fastapi import APIRouter
+
 from app.model.order import Order
-from app.database import db_session_wrapper
+from app.model.product import Product
+from app.schema.order import CreateOrder, OrderResponse
+from app.schema.product import CreateProduct, ProductResponse
 
 router = APIRouter(
     tags=["MANAGE"],
 )
 
+
 @router.post("/products", response_model=ProductResponse)
-def add_product(
-    payload: CreateProduct
-):
+def add_product(payload: CreateProduct):
     return Product.create(payload)
 
 
